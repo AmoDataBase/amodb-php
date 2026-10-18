@@ -8,7 +8,8 @@ namespace Amodb\Resource;
  * Search endpoints: `$client->search`.
  *
  * Every method takes the search text, an optional `$params` array (for example `page`,
- * `year`, `include_adult`) and an optional `$language` tag.
+ * `year`, `first_air_date_year`) and an optional `$language` tag. The `include_adult`
+ * parameter is ignored: adult titles and people are never served.
  */
 final class Search extends AbstractResource
 {

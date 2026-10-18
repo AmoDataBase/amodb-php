@@ -36,11 +36,19 @@ final class People extends AbstractResource
         return $this->sub($id, 'tv_credits', $params, $language);
     }
 
+    /**
+     * Only `profiles` is filled.
+     */
     public function images(int|string $id, array $params = [], ?string $language = null): mixed
     {
         return $this->sub($id, 'images', $params, $language);
     }
 
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @return array{id: int, imdb_id: string|null, wikidata_id: string|null, facebook_id: string|null, instagram_id: string|null, tiktok_id: string|null, twitter_id: string|null, youtube_id: string|null}
+     */
     public function externalIds(int|string $id, array $params = [], ?string $language = null): mixed
     {
         return $this->sub($id, 'external_ids', $params, $language);

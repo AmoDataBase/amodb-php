@@ -133,9 +133,18 @@ class Client
     /**
      * Finds movies, shows and people by an external id.
      *
+     * These sources resolve: imdb_id (tt... for titles, nm... for people), tvdb_id, facebook_id,
+     * twitter_id, instagram_id, wikidata_id (Q... ids) and kinopoisk_id. The other sources are
+     * accepted and return empty lists. A missing or unknown source answers HTTP 400.
+     * Each result carries `media_type`. The episode and season lists are always empty.
+     *
      * @param int|string           $externalId     The external id, for example "tt0137523".
-     * @param string               $externalSource One of imdb_id, tvdb_id, wikidata_id, kinopoisk_id.
+     * @param string               $externalSource One of imdb_id, freebase_mid, freebase_id, tvdb_id, tvrage_id,
+     *                                             facebook_id, twitter_id, instagram_id, tiktok_id, youtube_id,
+     *                                             wikidata_id, kinopoisk_id.
      * @param array<string, mixed> $params         Extra query parameters.
+     *
+     * @return array{movie_results: list<array<string, mixed>>, person_results: list<array<string, mixed>>, tv_results: list<array<string, mixed>>, tv_episode_results: list<array<string, mixed>>, tv_season_results: list<array<string, mixed>>}
      *
      * @throws AmodbException
      */

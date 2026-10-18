@@ -33,7 +33,7 @@ echo $movie['title'], ' ', substr($movie['release_date'], 0, 4), "\n";
 echo $amodb->imageUrl($movie['poster_path'], 'w342'), "\n";
 ```
 
-Every method returns the decoded JSON body as a PHP array. The fields are the same as in TMDB v3.
+Every method returns the decoded JSON body as a PHP array. The fields are the same as in TMDB v3. The amodb extension methods document their reply shape in the `@return` tag, so editors and static analysers can check the keys.
 
 ## Authentication
 
@@ -64,7 +64,17 @@ $movie = $amodb->movies->details(550, ['credits', 'images', 'ratings']);
 echo count($movie['credits']['cast']), " cast members\n";
 ```
 
-The array is joined with commas into `append_to_response=credits,images,ratings`. A plain string works too. Besides the TMDB sections, amodb accepts `moods`, `soundtracks`, `ratings`, `wikidata` and `showtimes`.
+The array is joined with commas into `append_to_response=credits,images,ratings`. A plain string works too. The API takes up to 20 names and ignores unknown names without an error.
+
+- Movies: `credits`, `images`, `videos`, `keywords`, `translations`, `external_ids`, `similar`, `recommendations`, `reviews`, `release_dates`, `watch/providers`, `alternative_titles`, `lists`, `moods`, `soundtracks`, `ratings`, `wikidata`, `showtimes`.
+- TV shows: the same names, with `content_ratings` and `episode_groups` in place of `release_dates`.
+- People: `combined_credits`, `movie_credits`, `tv_credits`, `external_ids`, `images`.
+
+The appended `moods`, `ratings` and `soundtracks` sections have no `id` key. `wikidata` and `showtimes` keep theirs. To get the venues of one country with `showtimes`, pass the country in `$params`:
+
+```php
+$movie = $amodb->movies->details(550, ['showtimes'], ['country' => 'RU']);
+```
 
 More calls:
 
@@ -77,7 +87,11 @@ $amodb->people->combinedCredits(287);
 $amodb->discover->movie(['with_genres' => [28, 12], 'sort_by' => 'popularity.desc']);
 $amodb->trending->get('movie', 'week');
 $amodb->genres->movies();
+$amodb->movies->latest();
+$amodb->tv->episodeGroups(1396);
 ```
+
+List methods take `$page` from 1 to 500. `movies->lists()` and `tv->lists()` are paged too.
 
 Resources on the client: `movies`, `tv`, `people`, `search`, `discover`, `trending`, `genres`, `collections`, `companies`, `networks`, `keywords`, `certifications`, `watchProviders` and `omdb`. Every method takes an optional `$params` array and an optional `$language`.
 
@@ -118,19 +132,83 @@ Bodies keep the OMDb field names. The key is sent as `apikey`. A body with `"Res
 
 ```php
 $found = $amodb->find('tt0137523', 'imdb_id');
-// Sources: imdb_id, tvdb_id, wikidata_id, kinopoisk_id
+echo $found['movie_results'][0]['title'], "\n"; // Fight Club
+
+$found = $amodb->find('361', 'kinopoisk_id');
+$found = $amodb->find('Q35332', 'wikidata_id');
+echo $found['person_results'][0]['name'], "\n"; // Brad Pitt
 ```
+
+These sources return results: `imdb_id` (`tt...` for titles, `nm...` for people), `tvdb_id`, `facebook_id`, `twitter_id`, `instagram_id`, `wikidata_id` and `kinopoisk_id`. `freebase_mid`, `freebase_id`, `tvrage_id`, `tiktok_id` and `youtube_id` are accepted and return empty lists. A missing or unknown source answers HTTP 400 with `status_code` 22.
+
+The reply has `movie_results`, `person_results`, `tv_results`, `tv_episode_results` and `tv_season_results`. The last two are always empty. Every item has a `media_type`.
 
 ## Extras
 
+Methods for the amodb extension endpoints exist on both `movies` and `tv`.
+
+### Moods
+
 ```php
-$amodb->movies->moods(550);
-$amodb->movies->soundtracks(550);
-$amodb->movies->ratings(550);
-$amodb->movies->wikidata(550);
-$amodb->movies->showtimes(550, 'US');
-$amodb->tv->ratings(1396);
+$moods = $amodb->movies->moods(155);
+
+echo $moods['source'], "\n"; // measured
+echo $moods['results'][0]['name'], ' ', $moods['results'][0]['avg'], "\n"; // action 3.9
 ```
+
+`source` is `measured` for viewer data, `estimated` when the meters come from genres (whole numbers), or `null` with an empty `results` list when the title has no data. Each result has `name`, `avg` and `values` (up to 24 readings) on a 0 to 10 scale. The names are action, fear, humor, pace, profanity, romance, sadness, sex and violence. A title may have fewer than nine.
+
+### Soundtracks
+
+```php
+$albums = $amodb->movies->soundtracks(155)['results'];
+
+echo $albums[0]['album'], ' ', $albums[0]['track_count'], " tracks\n"; // The Dark Knight 14 tracks
+echo $albums[0]['tracks'][0]['title'], "\n"; // Why So Serious?
+```
+
+`results` is empty when no album is known. An album has `source` (`musicbrainz` or `deezer`), `album`, `artist` (can be `null`), `released`, `url`, `track_count` and `tracks`. A track has `disc`, `number`, `title`, `artist` and `duration_ms`.
+
+### Ratings
+
+```php
+$ratings = $amodb->movies->ratings(550);
+
+echo $ratings['imdb']['value'], ' from ', $ratings['imdb']['votes'], " votes\n"; // 8.8 from 2669989 votes
+```
+
+The providers are `imdb`, `kinopoisk`, `metacritic`, `rotten_tomatoes` and `tmdb`. Each is `{value, votes}`, or `null` when the score is missing. `votes` can be `null`. imdb, kinopoisk and tmdb are out of 10, metacritic and rotten_tomatoes out of 100.
+
+### Wikidata
+
+```php
+$wikidata = $amodb->movies->wikidata(604);
+
+echo $wikidata['budget']['value'], ' ', $wikidata['budget']['currency'], "\n"; // 150000000 USD
+echo $wikidata['follows']['label'], ' ', $wikidata['follows']['tmdb_id'], "\n"; // The Matrix 603
+```
+
+`budget` and `box_office` are `{value, currency}` or `null` (`box_office` adds `worldwide`). `follows` and `followed_by` are links or `null`. `sitelinks` maps a language code to a Wikipedia page title. `awards`, `nominations`, `based_on`, `filming_locations`, `narrative_locations` and `original_broadcasters` are lists. A link has `wikidata_id` and `label`, plus `tmdb_id` and `media_type` when the item is a title in the catalog.
+
+### Showtimes
+
+```php
+// Which countries have showtimes
+$countries = $amodb->movies->showtimes(550);
+echo $countries['countries'][0]['country'], ' ', $countries['countries'][0]['venues'], " venues\n";
+
+// Venues and showtimes for one country
+$venues = $amodb->movies->showtimes(550, 'RU');
+echo $venues['results'][0]['name'], ' ', $venues['results'][0]['showtimes'][0]['start'], "\n";
+```
+
+The country code is optional. Without it, `results` is empty and `countries` holds the counts per country: `venues`, `cities`, `showtimes`, `first_day` and `last_day`. With it, `results` lists the venues, and each venue has a `showtimes` list. `start` is the local time at the venue. Only days from today on are listed.
+
+## Calls that are not offered
+
+These TMDB paths answer 404 with `status_code` 34, so the client has no method for them: `aggregate_credits`, `changes`, `person/{id}/translations`, `person/{id}/tagged_images`, `credit/{id}`, `review/{id}`, `tv/episode_group/{id}`, images, translations and alternative names of collections, companies and networks, and `configuration/timezones`. Everything under `account`, `authentication`, `guest_session` and `list` answers 405 with `status_code` 37, and so does any `rating` or `account_states` path.
+
+Some served calls return little: `reviews` is empty for most titles, and season and episode `videos` and `translations` are empty. The `include_adult` parameter is ignored, because adult titles and people are never served.
 
 ## Other calls
 
