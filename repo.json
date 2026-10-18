@@ -1,0 +1,6 @@
+{
+  "name": "amodb-php",
+  "description": "PHP client for the amodb API, a TMDB v3 and OMDb compatible movie and TV metadata API.",
+  "homepage": "https://amodb.dev",
+  "topics": ["amodb", "tmdb", "omdb", "php", "composer", "movie-api", "tv-api", "api-client", "sdk", "psr-18"]
+}

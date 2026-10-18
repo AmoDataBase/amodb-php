@@ -1,0 +1,31 @@
+# Runs the tests and creates a GitHub release when a tag like v0.2.0 is pushed.
+# Packagist reads the tag through its GitHub webhook, so nothing is uploaded here.
+# One time setup: submit https://github.com/amodb-dev/amodb-php on Packagist and
+# enable the GitHub hook for it, see the Releasing section of CONTRIBUTING.md.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: curl, json
+          coverage: none
+          tools: composer:v2
+      - run: composer validate --strict
+      - run: composer install --prefer-dist --no-progress
+      - run: vendor/bin/phpunit
+      - name: Create the GitHub release
+        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

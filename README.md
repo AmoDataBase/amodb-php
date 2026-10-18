@@ -1,6 +1,18 @@
-<!-- GitHub topics: amodb, tmdb, omdb, php, composer, packagist, movie-api, tv-api, api-client, sdk, psr-18 -->
+<p align="center">
+  <a href="https://amodb.dev">
+    <img src="https://raw.githubusercontent.com/amodb-dev/.github/main/assets/lockup.png" alt="amodb" width="260">
+  </a>
+</p>
 
-# amodb-php
+<h1 align="center">amodb-php</h1>
+
+<p align="center">PHP client for the amodb movie and TV metadata API.</p>
+
+<p align="center">
+  <a href="https://github.com/amodb-dev/amodb-php/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/amodb-dev/amodb-php/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://packagist.org/packages/amodb/amodb-php"><img alt="Packagist version" src="https://img.shields.io/packagist/v/amodb/amodb-php"></a>
+  <a href="https://github.com/amodb-dev/amodb-php/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/amodb-dev/amodb-php"></a>
+</p>
 
 PHP client for the amodb API. amodb serves movie and TV metadata through a TMDB v3 compatible API and an OMDb compatible endpoint.
 
@@ -329,6 +341,17 @@ composer test
 ```
 
 The test suite was written for PHPUnit 10 on PHP 8.1 or newer. It uses a fake transport, so it needs no network and no API key.
+
+## Links
+
+- Website: https://amodb.dev
+- Docs: https://amodb.dev/docs
+- Pricing: https://amodb.dev/pricing
+- Status: https://amodb.dev/status
+- Issues: https://github.com/amodb-dev/amodb-php/issues
+- Changelog: https://github.com/amodb-dev/amodb-php/blob/main/CHANGELOG.md
+- Security: https://github.com/amodb-dev/amodb-php/blob/main/SECURITY.md
+- Organization: https://github.com/amodb-dev
 
 ## License
 
