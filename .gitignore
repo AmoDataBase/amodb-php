@@ -1,0 +1,31 @@
+# Dependencies and build output
+vendor/
+node_modules/
+dist/
+build/
+.venv/
+__pycache__/
+.pytest_cache/
+*.tsbuildinfo
+
+# A library does not commit its lock file
+composer.lock
+
+# Test and coverage output
+.phpunit.cache/
+.phpunit.result.cache
+coverage/
+coverage.xml
+clover.xml
+*.cover
+
+# Secrets
+.env
+.env.local
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

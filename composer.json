@@ -1,0 +1,60 @@
+{
+    "name": "amodb/amodb-php",
+    "description": "PHP client for the amodb API, a TMDB v3 and OMDb compatible movie and TV metadata API.",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://amodb.dev",
+    "keywords": [
+        "amodb",
+        "tmdb",
+        "omdb",
+        "php",
+        "movie-api",
+        "tv-api",
+        "api-client",
+        "sdk",
+        "psr-18",
+        "movies",
+        "tv"
+    ],
+    "authors": [
+        {
+            "name": "amodb",
+            "homepage": "https://amodb.dev"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/netlistenany-bot/amodb-php/issues",
+        "source": "https://github.com/netlistenany-bot/amodb-php",
+        "docs": "https://amodb.dev"
+    },
+    "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "suggest": {
+        "psr/http-client": "Needed for the PSR-18 transport (Amodb\\Http\\Psr18Transport), together with any PSR-18 client implementation.",
+        "psr/http-factory": "Needed for the PSR-18 transport, together with any PSR-17 request factory implementation."
+    },
+    "autoload": {
+        "psr-4": {
+            "Amodb\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Amodb\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}
