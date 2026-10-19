@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://amodb.dev">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amodb-dev/.github/main/assets/lockup-dark.png">
-      <img src="https://raw.githubusercontent.com/amodb-dev/.github/main/assets/lockup-light.png" alt="amodb" width="260">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AmoDataBase/.github/main/assets/lockup-dark.png">
+      <img src="https://raw.githubusercontent.com/AmoDataBase/.github/main/assets/lockup-light.png" alt="amodb" width="260">
     </picture>
   </a>
 </p>
@@ -12,9 +12,9 @@
 <p align="center">PHP client for the amodb movie and TV metadata API.</p>
 
 <p align="center">
-  <a href="https://github.com/amodb-dev/amodb-php/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/amodb-dev/amodb-php/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/AmoDataBase/amodb-php/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/AmoDataBase/amodb-php/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://packagist.org/packages/amodb/amodb-php"><img alt="Packagist version" src="https://img.shields.io/packagist/v/amodb/amodb-php"></a>
-  <a href="https://github.com/amodb-dev/amodb-php/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/amodb-dev/amodb-php"></a>
+  <a href="https://github.com/AmoDataBase/amodb-php/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/AmoDataBase/amodb-php"></a>
 </p>
 
 PHP client for the amodb API. amodb serves movie and TV metadata through a TMDB v3 compatible API and an OMDb compatible endpoint.
@@ -351,10 +351,10 @@ The test suite was written for PHPUnit 10 on PHP 8.1 or newer. It uses a fake tr
 - Docs: https://amodb.dev/docs
 - Pricing: https://amodb.dev/pricing
 - Status: https://amodb.dev/status
-- Issues: https://github.com/amodb-dev/amodb-php/issues
-- Changelog: https://github.com/amodb-dev/amodb-php/blob/main/CHANGELOG.md
-- Security: https://github.com/amodb-dev/amodb-php/blob/main/SECURITY.md
-- Organization: https://github.com/amodb-dev
+- Issues: https://github.com/AmoDataBase/amodb-php/issues
+- Changelog: https://github.com/AmoDataBase/amodb-php/blob/main/CHANGELOG.md
+- Security: https://github.com/AmoDataBase/amodb-php/blob/main/SECURITY.md
+- Organization: https://github.com/AmoDataBase
 
 ## License
 

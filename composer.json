@@ -24,8 +24,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/amodb-dev/amodb-php/issues",
-        "source": "https://github.com/amodb-dev/amodb-php",
+        "issues": "https://github.com/AmoDataBase/amodb-php/issues",
+        "source": "https://github.com/AmoDataBase/amodb-php",
         "docs": "https://amodb.dev"
     },
     "require": {

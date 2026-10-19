@@ -28,7 +28,7 @@ For maintainers.
 
 Composer installs from Packagist, which reads new tags from GitHub through a webhook. One time setup:
 
-1. Submit `https://github.com/amodb-dev/amodb-php` on Packagist as the package `amodb/amodb-php`.
+1. Submit `https://github.com/AmoDataBase/amodb-php` on Packagist as the package `amodb/amodb-php`.
 2. In the GitHub repository open Settings, then Webhooks, then Add webhook.
 3. Set the payload URL to `https://packagist.org/api/github?username=YOUR_PACKAGIST_USER`, the content type to `application/json`, the secret to your Packagist API token and the event to push only.
 

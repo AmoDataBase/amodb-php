@@ -15,7 +15,7 @@ Align extension types with the live API.
 - Removed `tv->aggregateCredits()`. The API does not serve `aggregate_credits`.
 - README lists the valid `append_to_response` names and the calls that are not offered.
 - Add CI, release and Dependabot workflows.
-- Repository and package URLs now point to the amodb-dev organization.
+- Repository and package URLs now point to the AmoDataBase organization.
 
 ## 0.1.0 - 2026-10-18
 

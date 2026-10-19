@@ -1,6 +1,6 @@
 # Runs the tests and creates a GitHub release when a tag like v0.2.0 is pushed.
 # Packagist reads the tag through its GitHub webhook, so nothing is uploaded here.
-# One time setup: submit https://github.com/amodb-dev/amodb-php on Packagist and
+# One time setup: submit https://github.com/AmoDataBase/amodb-php on Packagist and
 # enable the GitHub hook for it, see the Releasing section of CONTRIBUTING.md.
 name: Release
 
